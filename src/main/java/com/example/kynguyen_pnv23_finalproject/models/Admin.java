@@ -23,4 +23,9 @@ public class Admin {
         }
         return false;
     }
+    @Override
+    public String toString() {
+        return "admin: "+ userName + " password: " + password;
+    }
+
 }
