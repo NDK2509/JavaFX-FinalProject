@@ -1,5 +1,5 @@
 # JavaFX connect DB
-
+### ***Pay attention to choose the project system libs (Maven and Gradle)
 1. Add library mysql-connector in build.gradle
 ```.gradle
     dependencies {

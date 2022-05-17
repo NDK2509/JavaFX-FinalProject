@@ -1,31 +1,30 @@
 package com.example.kynguyen_pnv23_finalproject.screens;
 
 import com.example.kynguyen_pnv23_finalproject.Manager;
-import com.example.kynguyen_pnv23_finalproject.models.Admin;
+import com.example.kynguyen_pnv23_finalproject.controllers.LoginController;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 
-public class LoginScreen{
-    public interface OnValidLogin {
-        void run();
-    }
+public class LoginScreen implements Screen{
+
     private GridPane root;
     private TextField txtUsername;
     private TextField txtPassword;
-    private OnValidLogin onValidLogin;
+    private LoginController controller;
 
-    public LoginScreen(OnValidLogin event){
+    public LoginScreen(LoginController controller){
         root = new GridPane();
         txtUsername = new TextField();
         txtPassword = new PasswordField();
-        onValidLogin = event;
+        this.controller = controller;
     }
     public Scene getScene() {
         return new Scene(root, 600, 600);
     }
+    @Override
     public LoginScreen drawUI() {
         root.setAlignment(Pos.CENTER);
         root.setHgap(20);
@@ -36,16 +35,7 @@ public class LoginScreen{
         lbLogin.setAlignment(Pos.CENTER);
         var btnLogin = new Button("Login");
         btnLogin.setMaxWidth(Double.MAX_VALUE);
-        btnLogin.setOnAction((e) -> {
-            if(Manager.isValidAdmin(new Admin(txtUsername.getText(), txtPassword.getText()))) {
-                onValidLogin.run();
-                return;
-            }
-            var alert = new Alert(Alert.AlertType.WARNING, "Username or password is wrong!");
-            alert.setHeaderText(null);
-            alert.setTitle("Login warning!");
-            alert.showAndWait();
-        });
+        btnLogin.setOnAction((e) -> controller.login(txtUsername.getText(), txtPassword.getText()));
         root.add(lbLogin, 0, 0, 2, 1);
         root.add(new Label("Username: "), 0, 1);
         root.add(txtUsername, 1,1);
