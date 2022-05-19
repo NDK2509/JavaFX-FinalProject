@@ -10,7 +10,8 @@ import javafx.stage.Stage;
 public class MainController extends Application {
     @Override
     public void start(Stage stage) {
-//        var manager = new Manager();
+        var manager = new Manager();
+        manager.mgTest();
 //        manager.getAdminList().stream().forEach(System.out::println);
         var loginScreen = new LoginScreen(
                 new LoginController(

@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 
+// ***Multiple scenes***
 public class HomeScreen implements Screen{
     private GridPane root;
     private HomeController controller;

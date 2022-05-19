@@ -27,5 +27,4 @@ public class Admin {
     public String toString() {
         return "admin: "+ userName + " password: " + password;
     }
-
 }

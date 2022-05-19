@@ -9,6 +9,7 @@ build/
 .idea/jarRepositories.xml
 .idea/compiler.xml
 .idea/libraries/
+.src/main/java/com/example/kynguyen_pnv23_finalprojct/FireBaseConnect/service.json
 *.iws
 *.iml
 *.ipr
