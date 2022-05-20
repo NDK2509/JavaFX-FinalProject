@@ -29,6 +29,7 @@
         private static final String URL = "jdbc:mysql://localhost/ndkshop"; //jdbc:mysql is required 
         private static final String USERNAME = "root";
         private static final String PASSWORD = "";
+        private Connection connection;
         
         public DBConnect() {
             try {
@@ -39,5 +40,26 @@
                 System.out.println(e);
             }
         }
+        public Connection getConnection() {
+            return connection;
+        }
+    }
+```
+5. How to query mysql?<br>
+Here is an example:
+```java
+    var connection = new DBConnect().getConnection();
+    ArrayList<Admin> list = new ArrayList<>();
+    try {
+        var result = connection.prepareStatement("SELECT * FROM admins").executeQuery();
+        while (result.next()) {
+            list.add(new Admin(
+                            result.getString(1),
+                            result.getString(2)
+                    )
+            );
+        }
+    } catch (SQLException e) {
+        throw new Error("Can't query!!!" + e);
     }
 ```
