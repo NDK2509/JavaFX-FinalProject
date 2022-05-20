@@ -16,9 +16,9 @@ public class MongoDBConnection {
                     .build();
             MongoClient mongoClient = MongoClients.create(settings);
             db = mongoClient.getDatabase("JavaFX");
-            System.out.println("MGDB: Successfully!!!");
+            System.out.println("MongoDB: Successfully!!!");
         } catch (MongoClientException e) {
-            System.out.println(e);
+            System.out.println("Can't connect MongoDB: " + e);
         }
     }
     public MongoDatabase getDataBase() {

@@ -11,5 +11,6 @@ module com.example.kynguyenpnv23_finalproject {
     requires org.mongodb.bson;
 
     opens com.example.kynguyen_pnv23_finalproject to javafx.fxml;
+    opens com.example.kynguyen_pnv23_finalproject.models to javafx.base;
     exports com.example.kynguyen_pnv23_finalproject;
 }

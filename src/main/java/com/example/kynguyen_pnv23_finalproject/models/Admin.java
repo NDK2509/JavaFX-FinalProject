@@ -1,8 +1,8 @@
 package com.example.kynguyen_pnv23_finalproject.models;
 
 public class Admin {
-    private String userName;
-    private String password;
+    private final String userName;
+    private final String password;
 
     public Admin(String userName, String password) {
         this.userName = userName;
@@ -17,8 +17,7 @@ public class Admin {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof Admin) {
-            var admin = (Admin)obj;
+        if (obj instanceof Admin admin) {
             return userName.equals(admin.getUserName()) && password.equals(admin.getPassword());
         }
         return false;

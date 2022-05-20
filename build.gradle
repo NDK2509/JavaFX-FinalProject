@@ -38,6 +38,7 @@ dependencies {
     implementation('com.dlsc.formsfx:formsfx-core:11.5.0') {
         exclude(group: 'org.openjfx')
     }
+    implementation 'ch.qos.logback:logback-classic:1.2.11'
     implementation("mysql:mysql-connector-java:8.0.29")
     implementation('org.mongodb:mongodb-driver-sync:4.6.0')
     implementation('org.kordamp.bootstrapfx:bootstrapfx-core:0.4.0')

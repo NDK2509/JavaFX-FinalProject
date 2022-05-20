@@ -1,30 +1,34 @@
 package com.example.kynguyen_pnv23_finalproject.controllers;
 
-import com.example.kynguyen_pnv23_finalproject.models.Admin;
-import com.example.kynguyen_pnv23_finalproject.screens.LoginScreen;
 import javafx.scene.control.Alert;
 
-public class LoginController {
-    private OnValidLogin validLoginEvent;
+public class LoginController extends Controller{
+    private LoginScreenEvent event;
 
-    public LoginController(OnValidLogin event) {
-        validLoginEvent = event;
+    public LoginController(LoginScreenEvent event) {
+        this.event = event;
     }
-    private boolean isValidLogin(String userName, String password) {
 
-        return false;
-    }
     public void login(String userName, String password) {
         if (isValidLogin(userName, password)) {
-            validLoginEvent.run();
+            event.onValidLogin();
             return;
         }
+        loginFailNotify();
+    }
+
+    private void loginFailNotify() {
         var alert = new Alert(Alert.AlertType.WARNING, "Username or password is wrong!");
         alert.setHeaderText(null);
         alert.setTitle("Login warning!");
         alert.showAndWait();
     }
-    public interface OnValidLogin {
-        void run();
+
+    private boolean isValidLogin(String userName, String password) {
+        var admin = mg.getAdminByUserName(userName);
+        return admin != null && admin.getPassword().equals(password);
+    }
+    public interface LoginScreenEvent {
+        void onValidLogin();
     }
 }
