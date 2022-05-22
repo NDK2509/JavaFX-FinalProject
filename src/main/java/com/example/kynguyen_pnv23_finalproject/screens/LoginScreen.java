@@ -7,7 +7,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 
-public class LoginScreen implements Screen{
+public abstract class LoginScreen implements Screen{
     private Scene scene;
     private final GridPane ROOT = new GridPane();
     private final LoginController CONTROLLER;
@@ -19,6 +19,7 @@ public class LoginScreen implements Screen{
     public Scene getScene() {
         return this.scene;
     }
+
     @Override
     public LoginScreen drawUI() {
         ROOT.setAlignment(Pos.CENTER);

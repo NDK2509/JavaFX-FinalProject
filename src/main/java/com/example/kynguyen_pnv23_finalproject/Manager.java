@@ -5,14 +5,16 @@ import com.example.kynguyen_pnv23_finalproject.models.Admin;
 import com.example.kynguyen_pnv23_finalproject.models.Product;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
+import org.bson.types.ObjectId;
+
 import static com.mongodb.client.model.Filters.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Manager {
     public static final String PRODUCT_COLLECTION_NAME = "products";
-    private final MongoDatabase mgDB = new MongoDBConnection().getDataBase();
     private static final String ADMIN_COLLECTION_NAME = "admins";
+    private final MongoDatabase mgDB = new MongoDBConnection().getDataBase();
     public List<Admin> getAdminList() {
         var list = new ArrayList<Admin>();
         mgDB.getCollection(ADMIN_COLLECTION_NAME).find().forEach(doc ->
@@ -49,9 +51,17 @@ public class Manager {
                     specsDoc.getString("special")
             ));
             list.add(product);
-            System.out.println(product.getSpecs().getRAM());
         });
         return list;
     }
 
+    public void updateProduct(Product product) {
+        var updatedProduct = new Document();
+        updatedProduct.append("_id", new ObjectId(product.getId()));
+        mgDB.getCollection(PRODUCT_COLLECTION_NAME)
+            .updateOne(
+                updatedProduct,
+                product.getUpdateBson()
+            );
+    }
 }

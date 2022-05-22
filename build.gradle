@@ -42,6 +42,7 @@ dependencies {
     implementation("mysql:mysql-connector-java:8.0.29")
     implementation('org.mongodb:mongodb-driver-sync:4.6.0')
     implementation('org.kordamp.bootstrapfx:bootstrapfx-core:0.4.0')
+    implementation 'org.jetbrains:annotations:20.1.0'
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
 }

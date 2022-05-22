@@ -20,8 +20,7 @@ public class MainController extends Application {
                     stage.close();
                 }
             )
-        )
-        {
+        ) {
             @Override
             public void onUpdateUI() {
                 stage.setScene(this.drawUI().getScene());
@@ -29,13 +28,16 @@ public class MainController extends Application {
         }.drawUI();
         //-------------
         var loginScreen = new LoginScreen(
-                new LoginController(
-                        () -> {
-                            stage.setScene(homeScreen.getScene());
-                            System.out.println("Next screen");
-                        }
-                )
-        ).drawUI();
+            new LoginController(
+                () -> {
+                    stage.setScene(homeScreen.getScene());
+                    System.out.println("Next screen");
+                }
+            )
+        ) {
+            @Override
+            public void onUpdateUI() {}
+        }.drawUI();
         stage.setTitle("Hello, Welcome to NDK Shop!");
         stage.setScene(homeScreen.getScene());
         stage.show();

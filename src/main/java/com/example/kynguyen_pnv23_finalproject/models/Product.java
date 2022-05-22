@@ -1,5 +1,8 @@
 package com.example.kynguyen_pnv23_finalproject.models;
 
+import com.mongodb.client.model.Updates;
+import org.bson.conversions.Bson;
+
 public class Product {
     private String id;
     private String name;
@@ -83,6 +86,15 @@ public class Product {
         this.specs = specs;
         return this;
     }
+    public Bson getUpdateBson() {
+        return Updates.combine(
+                Updates.set("name", name),
+                Updates.set("price", price),
+                Updates.set("img", img),
+                Updates.set("type", type),
+                Updates.set("color", color)
+            );
+    }
     public static class Specs {
         private String internalMemory;
         private String RAM;
@@ -99,28 +111,32 @@ public class Product {
         public String getInternalMemory() {
             return internalMemory;
         }
-        public void setInternalMemory(String internalMemory) {
+        public Specs setInternalMemory(String internalMemory) {
             this.internalMemory = internalMemory;
+            return this;
         }
         public String getRAM() {
             return RAM;
         }
-        public void setRAM(String RAM) {
+        public Specs setRAM(String RAM) {
             this.RAM = RAM;
+            return this;
         }
         public String getChargePort() {
             return chargePort;
         }
-        public void setChargePort(String chargePort) {
+        public Specs setChargePort(String chargePort) {
             this.chargePort = chargePort;
+            return this;
         }
 
         public String getSpacial() {
             return spacial;
         }
 
-        public void setSpacial(String spacial) {
+        public Specs setSpacial(String spacial) {
             this.spacial = spacial;
+            return this;
         }
     }
 }
