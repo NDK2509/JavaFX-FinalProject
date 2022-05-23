@@ -3,6 +3,7 @@ package com.example.kynguyen_pnv23_finalproject;
 import com.example.kynguyen_pnv23_finalproject.connectDB.MongoDBConnection;
 import com.example.kynguyen_pnv23_finalproject.models.Admin;
 import com.example.kynguyen_pnv23_finalproject.models.Product;
+import com.mongodb.MongoClientException;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -58,10 +59,21 @@ public class Manager {
     public void updateProduct(Product product) {
         var updatedProduct = new Document();
         updatedProduct.append("_id", new ObjectId(product.getId()));
-        mgDB.getCollection(PRODUCT_COLLECTION_NAME)
-            .updateOne(
-                updatedProduct,
-                product.getUpdateBson()
-            );
+        try {
+            mgDB.getCollection(PRODUCT_COLLECTION_NAME)
+                .updateOne(
+                        updatedProduct,
+                        product.getUpdateBson()
+                );
+        } catch (MongoClientException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    public void deleteProduct(String id) {
+        try {
+            mgDB.getCollection(PRODUCT_COLLECTION_NAME).deleteOne(eq("_id", new ObjectId(id)));
+        } catch (MongoClientException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

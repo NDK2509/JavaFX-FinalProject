@@ -5,10 +5,7 @@ import com.example.kynguyen_pnv23_finalproject.models.*;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -113,14 +110,33 @@ public abstract class HomeScreen implements Screen{
             var product = e.getTableView().getItems().get(e.getTablePosition().getRow());
             product.setType(newColor);
         } );
-        var deleteCol = new TableColumn<String, String>("Action");
+        var deleteCol = new TableColumn<Product, Void>("Action");
+        deleteCol.setCellFactory(column -> new TableCell<>() {
+            private final Button btn = new Button("Delete");
+            {
+                btn.setOnAction((e) -> {
+                    var product = getTableView().getItems().get(getIndex());
+//                  System.out.println("selectedData: " + data);
+                    CONTROLLER.getManager().deleteProduct(product.getId());
+                });
+            }
+            @Override
+            public void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(btn);
+                }
+            }
+        });
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         typeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
         priceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
         imgCol.setCellValueFactory(new PropertyValueFactory<>("img"));
         colorCol.setCellValueFactory(new PropertyValueFactory<>("color"));
 
-        tblView.getColumns().addAll(nameCol, typeCol, priceCol, imgCol, colorCol);
+        tblView.getColumns().addAll(nameCol, typeCol, priceCol, imgCol, colorCol, deleteCol);
         tblView.setItems(FXCollections.observableArrayList(CONTROLLER.getManager().getProductList()));
 
         var vb = new VBox();
