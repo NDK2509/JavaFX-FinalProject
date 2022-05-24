@@ -1,7 +1,9 @@
 package com.example.kynguyen_pnv23_finalproject.models;
 
 import com.mongodb.client.model.Updates;
+import org.bson.Document;
 import org.bson.conversions.Bson;
+import org.bson.types.ObjectId;
 
 public class Product {
     private String id;
@@ -86,26 +88,40 @@ public class Product {
         this.specs = specs;
         return this;
     }
+    public String getRam() {
+        return specs.getRam();
+    }
     public Bson getUpdateBson() {
         return Updates.combine(
                 Updates.set("name", name),
                 Updates.set("price", price),
                 Updates.set("img", img),
                 Updates.set("type", type),
-                Updates.set("color", color)
+                Updates.set("color", color),
+                Updates.set("specs.ram", specs.ram),
+                Updates.set("specs.chargePort", specs.chargePort)
             );
+    }
+    public Document getMongoDocument() {
+        return new Document()
+                .append("_id", new ObjectId())
+                .append("name", name)
+                .append("price", price)
+                .append("img", img)
+                .append("type", type)
+                .append("color", color);
     }
     public static class Specs {
         private String internalMemory;
-        private String RAM;
+        private String ram;
         private String chargePort;
-        private String spacial;
+        private String special;
 
-        public Specs(String internalMemory, String RAM, String chargePort, String spacial) {
+        public Specs(String internalMemory, String ram, String chargePort, String special) {
             this.internalMemory = internalMemory;
-            this.RAM = RAM;
+            this.ram = ram;
             this.chargePort = chargePort;
-            this.spacial = spacial;
+            this.special = special;
         }
 
         public String getInternalMemory() {
@@ -115,11 +131,11 @@ public class Product {
             this.internalMemory = internalMemory;
             return this;
         }
-        public String getRAM() {
-            return RAM;
+        public String getRam() {
+            return ram;
         }
-        public Specs setRAM(String RAM) {
-            this.RAM = RAM;
+        public Specs setRam(String ram) {
+            this.ram = ram;
             return this;
         }
         public String getChargePort() {
@@ -130,12 +146,12 @@ public class Product {
             return this;
         }
 
-        public String getSpacial() {
-            return spacial;
+        public String getSpecial() {
+            return special;
         }
 
-        public Specs setSpacial(String spacial) {
-            this.spacial = spacial;
+        public Specs setSpecial(String special) {
+            this.special = special;
             return this;
         }
     }

@@ -2,11 +2,15 @@ package com.example.kynguyen_pnv23_finalproject.screens;
 
 import com.example.kynguyen_pnv23_finalproject.controllers.HomeController;
 import com.example.kynguyen_pnv23_finalproject.models.*;
+import javafx.beans.InvalidationListener;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.util.converter.IntegerStringConverter;
@@ -110,6 +114,16 @@ public abstract class HomeScreen implements Screen{
             var product = e.getTableView().getItems().get(e.getTablePosition().getRow());
             product.setType(newColor);
         } );
+        var specsCol = new TableColumn<Product, String>("Specifications");
+        var ramCol = new TableColumn<Product, String>("RAM");
+        ramCol.setCellFactory(forTableColumn());
+        ramCol.setOnEditCommit(e -> {
+            var ram = e.getNewValue();
+            var product = e.getTableView().getItems().get(e.getTablePosition().getRow());
+            product.getSpecs().setRam(ram);
+            CONTROLLER.getManager().updateProduct(product);
+        } );
+        specsCol.getColumns().add(ramCol);
         var deleteCol = new TableColumn<Product, Void>("Action");
         deleteCol.setCellFactory(column -> new TableCell<>() {
             private final Button btn = new Button("Delete");
@@ -135,8 +149,8 @@ public abstract class HomeScreen implements Screen{
         priceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
         imgCol.setCellValueFactory(new PropertyValueFactory<>("img"));
         colorCol.setCellValueFactory(new PropertyValueFactory<>("color"));
-
-        tblView.getColumns().addAll(nameCol, typeCol, priceCol, imgCol, colorCol, deleteCol);
+        ramCol.setCellValueFactory(new PropertyValueFactory<>("ram"));
+        tblView.getColumns().addAll(nameCol, typeCol, priceCol, imgCol, colorCol, deleteCol, specsCol);
         tblView.setItems(FXCollections.observableArrayList(CONTROLLER.getManager().getProductList()));
 
         var vb = new VBox();

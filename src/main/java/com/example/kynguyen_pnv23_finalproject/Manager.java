@@ -47,7 +47,7 @@ public class Manager {
             var specsDoc = (Document)doc.get("specs");
             product.setSpecs(new Product.Specs(
                     specsDoc.getString("internalMemory"),
-                    specsDoc.getString("RAM"),
+                    specsDoc.getString("ram"),
                     specsDoc.getString("chargePort"),
                     specsDoc.getString("special")
             ));
@@ -65,6 +65,13 @@ public class Manager {
                         updatedProduct,
                         product.getUpdateBson()
                 );
+        } catch (MongoClientException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    public void addProduct(Product product) {
+        try {
+            mgDB.getCollection(PRODUCT_COLLECTION_NAME).insertOne(product.getMongoDocument());
         } catch (MongoClientException e) {
             System.out.println(e.getMessage());
         }
