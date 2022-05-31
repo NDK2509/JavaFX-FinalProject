@@ -2,15 +2,11 @@ package com.example.kynguyen_pnv23_finalproject.screens;
 
 import com.example.kynguyen_pnv23_finalproject.controllers.HomeController;
 import com.example.kynguyen_pnv23_finalproject.models.*;
-import javafx.beans.InvalidationListener;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.util.converter.IntegerStringConverter;
@@ -42,8 +38,12 @@ public abstract class HomeScreen implements Screen{
     }
     private HomeScreen drawHeader(GridPane root) {
         var btnLogout = new Button("Log Out");
+        var btnCreateProduct = new Button("Create Product");
+
         btnLogout.setOnAction(e -> CONTROLLER.logOut());
-        root.add(btnLogout, 0, 0, 2,1);
+        btnCreateProduct.setOnAction(e -> moveToCreateProduct());
+        root.add(btnLogout, 0, 0);
+        root.add(btnCreateProduct, 1, 0);
         return this;
     }
     private HomeScreen drawLeft(GridPane root) {
@@ -162,4 +162,5 @@ public abstract class HomeScreen implements Screen{
         vb.getChildren().add(new Label("NDK order"));
         return vb;
     }
+    public abstract void moveToCreateProduct();
 }

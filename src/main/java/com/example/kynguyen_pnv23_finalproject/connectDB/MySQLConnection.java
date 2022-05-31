@@ -14,7 +14,7 @@ public class MySQLConnection {
             System.out.println("Connect successfully!!!");
         } catch (SQLException e) {
             connection = null;
-            System.out.println(e);
+            System.out.println(e.getMessage());
         }
     }
     public Connection getConnection() {

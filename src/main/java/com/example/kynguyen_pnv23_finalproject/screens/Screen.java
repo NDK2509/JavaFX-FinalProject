@@ -4,7 +4,7 @@ import com.example.kynguyen_pnv23_finalproject.controllers.Controller;
 import javafx.scene.Scene;
 
 public interface Screen {
-    Screen drawUI();
     Scene getScene();
+    Screen drawUI();
     void onUpdateUI();
 }

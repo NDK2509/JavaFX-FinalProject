@@ -30,7 +30,6 @@ public class Manager {
         var result = mgDB.getCollection(ADMIN_COLLECTION_NAME).find(eq("userName", userName)).first();
         return result == null ? null : new Admin(result.getString("userName"), result.getString("password"));
     }
-
     //---------------Product-------------------
     public List<Product> getProductList() {
         var list = new ArrayList<Product>();
