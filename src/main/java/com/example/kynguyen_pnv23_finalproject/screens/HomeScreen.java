@@ -23,6 +23,7 @@ public abstract class HomeScreen implements Screen{
 
     public HomeScreen(HomeController controller) {
         CONTROLLER = controller;
+        drawUI();
     }
     @Override
     public Scene getScene() {return scene;}
@@ -40,7 +41,7 @@ public abstract class HomeScreen implements Screen{
         var btnLogout = new Button("Log Out");
         var btnCreateProduct = new Button("Create Product");
 
-        btnLogout.setOnAction(e -> CONTROLLER.logOut());
+        btnLogout.setOnAction(e -> logOut());
         btnCreateProduct.setOnAction(e -> moveToCreateProduct());
         root.add(btnLogout, 0, 0);
         root.add(btnCreateProduct, 1, 0);
@@ -163,4 +164,5 @@ public abstract class HomeScreen implements Screen{
         return vb;
     }
     public abstract void moveToCreateProduct();
+    public abstract void logOut();
 }

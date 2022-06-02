@@ -15,6 +15,7 @@ public abstract class CreateProductScreen implements Screen {
     private final ProductController CONTROLLER;
     public CreateProductScreen(ProductController controller) {
         CONTROLLER = controller;
+        drawUI();
     }
     @Override
     public Scene getScene() {

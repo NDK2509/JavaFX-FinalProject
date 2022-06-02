@@ -15,20 +15,18 @@ import java.io.IOException;
 public class MainController extends Application {
     @Override
     public void start(Stage stage) {
-        var createProductScreen = new CreateProductScreen(
-                new ProductController()
-        ) {
+        var createProductScreen = new CreateProductScreen(new ProductController()) {
             @Override
             public void onUpdateUI() {
                 stage.setScene(this.drawUI().getScene());
             }
-        }.drawUI();
+        };
         var homeScreen = new HomeScreen(
             new HomeController(
-                () -> {
-                    System.out.println("Log Out");
-                    stage.close();
-                }
+//                () -> {
+//                    System.out.println("Log Out");
+//                    stage.close();
+//                }
             )
         ) {
             @Override
@@ -40,21 +38,31 @@ public class MainController extends Application {
                 stage.setScene(createProductScreen.getScene());
             }
 
-        }.drawUI();
+            @Override
+            public void logOut() {
+                stage.close();
+            }
+        };
         //-------------
         var loginScreen = new LoginScreen(
-            new LoginController(
-                () -> {
-                    stage.setScene(homeScreen.getScene());
-                    System.out.println("Next screen");
-                }
-            )
+//            new LoginController(
+//                () -> {
+//                    stage.setScene(homeScreen.getScene());
+//                    System.out.println("Next screen");
+//                }
+//            )
+            new LoginController()
         ) {
             @Override
+            public void moveToHomeScreen() {
+                stage.setScene(homeScreen.getScene());
+            }
+
+            @Override
             public void onUpdateUI() {}
-        }.drawUI();
+        };
         stage.setTitle("Hello, Welcome to NDK Shop!");
-        stage.setScene(homeScreen.getScene());
+        stage.setScene(loginScreen.getScene());
         stage.show();
     }
 
