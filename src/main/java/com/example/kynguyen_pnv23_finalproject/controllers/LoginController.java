@@ -1,22 +1,25 @@
 package com.example.kynguyen_pnv23_finalproject.controllers;
 
+import com.example.kynguyen_pnv23_finalproject.screens.LoginScreen;
 import javafx.scene.control.Alert;
+import javafx.stage.Stage;
 
 public class LoginController extends Controller{
-//    private LoginScreenEvent event;
+    public LoginController(Stage stage) {
+        super(stage);
+    }
+    public void login() {
+        this.view(new LoginScreen() {
+            @Override
+            public void moveToHomeScreen() {
 
-//    public LoginController(LoginScreenEvent event) {
-//        this.event = event;
-//    }
-    public LoginController() {}
-//    public void login(String userName, String password) {
-//        if (isValidLogin(userName, password)) {
-//            event.onValidLogin();
-//            return;
-//        }
-//        loginFailNotify();
-//    }
+            }
+            @Override
+            public void onUpdateUI() {
 
+            }
+        });
+    }
     public void loginFailNotify() {
         var alert = new Alert(Alert.AlertType.WARNING, "Username or password is wrong!");
         alert.setHeaderText(null);

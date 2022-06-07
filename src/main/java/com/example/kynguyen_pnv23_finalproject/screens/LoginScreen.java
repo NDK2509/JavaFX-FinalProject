@@ -10,10 +10,7 @@ import javafx.scene.text.Font;
 public abstract class LoginScreen implements Screen{
     private Scene scene;
     private final GridPane ROOT = new GridPane();
-    private final LoginController CONTROLLER;
-
-    public LoginScreen(LoginController controller){
-        CONTROLLER = controller;
+    public LoginScreen() {
         drawUI();
     }
     @Override
@@ -35,11 +32,11 @@ public abstract class LoginScreen implements Screen{
         var btnLogin = new Button("Login");
         btnLogin.setMaxWidth(Double.MAX_VALUE);
         btnLogin.setOnAction((e) -> {
-            if (CONTROLLER.isValidLogin(txtUsername.getText(), txtPassword.getText())) {
-                moveToHomeScreen();
-                return;
-            }
-            CONTROLLER.loginFailNotify();
+//            if (CONTROLLER.isValidLogin(txtUsername.getText(), txtPassword.getText())) {
+//                moveToHomeScreen();
+//                return;
+//            }
+//            CONTROLLER.loginFailNotify();
         });
         ROOT.add(lbLogin, 0, 0, 2, 1);
         ROOT.add(new Label("Username: "), 0, 1);

@@ -52,14 +52,14 @@ public abstract class HomeScreen implements Screen{
         var btnProduct = new Button("Manage Product");
         btnProduct.setOnAction(e -> {
             action = PRODUCT_ACTION;
-            onUpdateUI();
+//            onUpdateUI();
         });
         btnProduct.setMinWidth(BUTTON_WIDTH);
         btnProduct.setMaxWidth(BUTTON_WIDTH);
         var btnOrder = new Button("Manage Order");
         btnOrder.setOnAction(e -> {
             action = ORDER_ACTION;
-            onUpdateUI();
+//            onUpdateUI();
         });
         btnOrder.setMinWidth(BUTTON_WIDTH);
         btnOrder.setMaxWidth(BUTTON_WIDTH);
