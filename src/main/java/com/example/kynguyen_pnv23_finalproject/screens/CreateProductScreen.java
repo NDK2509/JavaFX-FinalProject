@@ -1,6 +1,9 @@
 package com.example.kynguyen_pnv23_finalproject.screens;
 
+import com.example.kynguyen_pnv23_finalproject.MainController;
+import com.example.kynguyen_pnv23_finalproject.controllers.HomeController;
 import com.example.kynguyen_pnv23_finalproject.controllers.ProductController;
+import com.example.kynguyen_pnv23_finalproject.models.Product;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -10,13 +13,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 
-public abstract class CreateProductScreen implements Screen {
+public class CreateProductScreen implements Screen {
     private Scene scene;
-    private final ProductController CONTROLLER;
-    public CreateProductScreen(ProductController controller) {
-        CONTROLLER = controller;
+    public CreateProductScreen() {
         drawUI();
     }
+
     @Override
     public Scene getScene() {
         return this.scene;
@@ -55,6 +57,25 @@ public abstract class CreateProductScreen implements Screen {
         var txtSpecial = new TextField();
 
         var btnSave = new Button("Save");
+        btnSave.setOnAction(e -> {
+            ((ProductController) MainController.getController())
+                .create(
+                    new Product(
+                        txtName.getText(),
+                        Integer.parseInt(txtPrice.getText()),
+                        txtImg.getText(),
+                        txtType.getText(),
+                        txtColor.getText(),
+                        new Product.Specs(
+                            txtInternalMemory.getText(),
+                            txtRam.getText(),
+                            txtChargePort.getText(),
+                            txtSpecial.getText()
+                        )
+                    )
+                );
+            ((ProductController) MainController.getController()).switchToHome();
+        });
         var hbBtnSave = new HBox();
         hbBtnSave.getChildren().add(btnSave);
         hbBtnSave.setAlignment(Pos.CENTER);

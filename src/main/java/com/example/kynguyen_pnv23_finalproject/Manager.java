@@ -68,7 +68,7 @@ public class Manager {
             System.out.println(e.getMessage());
         }
     }
-    public void addProduct(Product product) {
+    public void createProduct(Product product) {
         try {
             mgDB.getCollection(PRODUCT_COLLECTION_NAME).insertOne(product.getMongoDocument());
         } catch (MongoClientException e) {

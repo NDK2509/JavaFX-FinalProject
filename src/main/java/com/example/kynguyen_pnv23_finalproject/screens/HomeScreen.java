@@ -1,6 +1,8 @@
 package com.example.kynguyen_pnv23_finalproject.screens;
 
+import com.example.kynguyen_pnv23_finalproject.MainController;
 import com.example.kynguyen_pnv23_finalproject.controllers.HomeController;
+import com.example.kynguyen_pnv23_finalproject.controllers.ProductController;
 import com.example.kynguyen_pnv23_finalproject.models.*;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
@@ -10,19 +12,18 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.util.converter.IntegerStringConverter;
+
+import java.util.List;
+
 import static javafx.scene.control.cell.TextFieldTableCell.*;
 
-public abstract class HomeScreen implements Screen{
-
-    public static final String PRODUCT_ACTION = "productAction";
-    public static final String ORDER_ACTION = "orderAction";
+public class HomeScreen implements Screen{
     public static final int BUTTON_WIDTH = 120;
-    private final HomeController CONTROLLER;
     private Scene scene;
-    private String action = PRODUCT_ACTION;
+    private final List<Product> productList;
 
-    public HomeScreen(HomeController controller) {
-        CONTROLLER = controller;
+    public HomeScreen(List<Product> productList) {
+        this.productList = productList;
         drawUI();
     }
     @Override
@@ -34,15 +35,15 @@ public abstract class HomeScreen implements Screen{
         root.setVgap(20);
         root.setPadding(new Insets(50));
         drawHeader(root).drawLeft(root).drawRight(root);
-        scene = new Scene(root, 850, 600);
+        scene = new Scene(root, 1300, 600);
         return this;
     }
     private HomeScreen drawHeader(GridPane root) {
         var btnLogout = new Button("Log Out");
         var btnCreateProduct = new Button("Create Product");
 
-        btnLogout.setOnAction(e -> logOut());
-        btnCreateProduct.setOnAction(e -> moveToCreateProduct());
+        btnLogout.setOnAction(e -> ((HomeController)MainController.getController()).logOut());
+        btnCreateProduct.setOnAction(e -> ((HomeController)MainController.getController()).switchToCreateProduct());
         root.add(btnLogout, 0, 0);
         root.add(btnCreateProduct, 1, 0);
         return this;
@@ -51,31 +52,25 @@ public abstract class HomeScreen implements Screen{
 
         var btnProduct = new Button("Manage Product");
         btnProduct.setOnAction(e -> {
-            action = PRODUCT_ACTION;
-//            onUpdateUI();
+            MainController.getController().onCreate();
         });
         btnProduct.setMinWidth(BUTTON_WIDTH);
         btnProduct.setMaxWidth(BUTTON_WIDTH);
-        var btnOrder = new Button("Manage Order");
-        btnOrder.setOnAction(e -> {
-            action = ORDER_ACTION;
-//            onUpdateUI();
-        });
-        btnOrder.setMinWidth(BUTTON_WIDTH);
-        btnOrder.setMaxWidth(BUTTON_WIDTH);
+
+
         var left = new VBox();
-        left.getChildren().addAll(btnProduct, btnOrder);
+        left.getChildren().addAll(btnProduct);
         root.add(left, 0, 1);
         return this;
     }
     private HomeScreen drawRight(GridPane root) {
-        var right = action.equals(PRODUCT_ACTION) ? getProductBox() : getOrderBox();
+        var right = getProductBox();
         root.add(right, 1, 1);
         return this;
     }
     private VBox getProductBox() {
         var tblView = new TableView<Product>();
-        tblView.setMinWidth(600);
+        tblView.setMinWidth(1000);
         tblView.setEditable(true);
 
         var nameCol = new TableColumn<Product, String>("Name");
@@ -84,7 +79,7 @@ public abstract class HomeScreen implements Screen{
             var newName = e.getNewValue();
             var product = e.getTableView().getItems().get(e.getTablePosition().getRow());
             product.setName(newName);
-            CONTROLLER.getManager().updateProduct(product);
+            ((HomeController)MainController.getController()).updateProduct(product);
         } );
         var typeCol = new TableColumn<Product, String>("Type");
         typeCol.setCellFactory(forTableColumn());
@@ -116,23 +111,48 @@ public abstract class HomeScreen implements Screen{
             product.setType(newColor);
         } );
         var specsCol = new TableColumn<Product, String>("Specifications");
+        var internalMemoryCol = new TableColumn<Product, String>("Internal Memory");
+        internalMemoryCol.setCellFactory(forTableColumn());
+        internalMemoryCol.setOnEditCommit(e -> {
+            var memo = e.getNewValue();
+            var product = e.getTableView().getItems().get(e.getTablePosition().getRow());
+            product.getSpecs().setInternalMemory(memo);
+            ((HomeController)MainController.getController()).updateProduct(product);
+        } );
         var ramCol = new TableColumn<Product, String>("RAM");
         ramCol.setCellFactory(forTableColumn());
         ramCol.setOnEditCommit(e -> {
             var ram = e.getNewValue();
             var product = e.getTableView().getItems().get(e.getTablePosition().getRow());
             product.getSpecs().setRam(ram);
-            CONTROLLER.getManager().updateProduct(product);
+            ((HomeController)MainController.getController()).updateProduct(product);
         } );
-        specsCol.getColumns().add(ramCol);
+        var chargePortCol = new TableColumn<Product, String>("Charge Port");
+        chargePortCol.setCellFactory(forTableColumn());
+        chargePortCol.setOnEditCommit(e -> {
+            var chargePort = e.getNewValue();
+            var product = e.getTableView().getItems().get(e.getTablePosition().getRow());
+            product.getSpecs().setChargePort(chargePort);
+            ((HomeController)MainController.getController()).updateProduct(product);
+        } );
+        var specialCol = new TableColumn<Product, String>("Special");
+        specialCol.setCellFactory(forTableColumn());
+        specialCol.setOnEditCommit(e -> {
+            var special = e.getNewValue();
+            var product = e.getTableView().getItems().get(e.getTablePosition().getRow());
+            product.getSpecs().setSpecial(special);
+            ((HomeController)MainController.getController()).updateProduct(product);
+        } );
+        specsCol.getColumns().addAll(internalMemoryCol,ramCol, chargePortCol, specialCol);
         var deleteCol = new TableColumn<Product, Void>("Action");
         deleteCol.setCellFactory(column -> new TableCell<>() {
             private final Button btn = new Button("Delete");
             {
                 btn.setOnAction((e) -> {
                     var product = getTableView().getItems().get(getIndex());
-//                  System.out.println("selectedData: " + data);
-                    CONTROLLER.getManager().deleteProduct(product.getId());
+                    var controller =  (HomeController)MainController.getController();
+                    controller.deleteProduct(product.getId());
+                    controller.onCreate();
                 });
             }
             @Override
@@ -150,9 +170,12 @@ public abstract class HomeScreen implements Screen{
         priceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
         imgCol.setCellValueFactory(new PropertyValueFactory<>("img"));
         colorCol.setCellValueFactory(new PropertyValueFactory<>("color"));
+        internalMemoryCol.setCellValueFactory(new PropertyValueFactory<>("internalMemory"));
         ramCol.setCellValueFactory(new PropertyValueFactory<>("ram"));
-        tblView.getColumns().addAll(nameCol, typeCol, priceCol, imgCol, colorCol, deleteCol, specsCol);
-        tblView.setItems(FXCollections.observableArrayList(CONTROLLER.getManager().getProductList()));
+        chargePortCol.setCellValueFactory(new PropertyValueFactory<>("chargePort"));
+        specialCol.setCellValueFactory(new PropertyValueFactory<>("special"));
+        tblView.getColumns().addAll(nameCol, typeCol, priceCol, imgCol, colorCol, specsCol, deleteCol);
+        tblView.setItems(FXCollections.observableArrayList(this.productList));
 
         var vb = new VBox();
         vb.getChildren().add(tblView);
@@ -163,6 +186,6 @@ public abstract class HomeScreen implements Screen{
         vb.getChildren().add(new Label("NDK order"));
         return vb;
     }
-    public abstract void moveToCreateProduct();
-    public abstract void logOut();
+//    public abstract void moveToCreateProduct();
+//    public abstract void logOut();
 }

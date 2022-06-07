@@ -6,5 +6,5 @@ import javafx.scene.Scene;
 public interface Screen {
     Scene getScene();
     Screen drawUI();
-    void onUpdateUI();
+//    void onUpdateUI();
 }

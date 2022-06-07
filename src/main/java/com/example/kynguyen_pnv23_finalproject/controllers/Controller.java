@@ -8,11 +8,12 @@ public abstract class Controller {
     protected Stage baseStage;
     protected Controller (Stage stage) {
         baseStage = stage;
+        onCreate();
     }
     protected final Manager mg = new Manager();
-    public Manager getManager () {return mg;}
     public void view(Screen screen) {
         baseStage.setScene(screen.getScene());
         baseStage.show();
     }
+    public abstract void onCreate();
 }

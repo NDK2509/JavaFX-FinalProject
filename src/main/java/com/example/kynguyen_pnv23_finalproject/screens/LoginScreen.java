@@ -1,5 +1,6 @@
 package com.example.kynguyen_pnv23_finalproject.screens;
 
+import com.example.kynguyen_pnv23_finalproject.MainController;
 import com.example.kynguyen_pnv23_finalproject.controllers.LoginController;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -7,7 +8,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 
-public abstract class LoginScreen implements Screen{
+public class LoginScreen implements Screen{
     private Scene scene;
     private final GridPane ROOT = new GridPane();
     public LoginScreen() {
@@ -32,11 +33,7 @@ public abstract class LoginScreen implements Screen{
         var btnLogin = new Button("Login");
         btnLogin.setMaxWidth(Double.MAX_VALUE);
         btnLogin.setOnAction((e) -> {
-//            if (CONTROLLER.isValidLogin(txtUsername.getText(), txtPassword.getText())) {
-//                moveToHomeScreen();
-//                return;
-//            }
-//            CONTROLLER.loginFailNotify();
+            ((LoginController)MainController.getController()).login(txtUsername.getText(), txtPassword.getText());
         });
         ROOT.add(lbLogin, 0, 0, 2, 1);
         ROOT.add(new Label("Username: "), 0, 1);
@@ -48,5 +45,5 @@ public abstract class LoginScreen implements Screen{
         scene = new Scene(ROOT, 600, 600);
         return this;
     }
-    public abstract void moveToHomeScreen();
+//    public abstract void moveToHomeScreen();
 }

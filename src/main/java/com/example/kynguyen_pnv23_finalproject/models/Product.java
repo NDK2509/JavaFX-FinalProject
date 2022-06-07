@@ -34,6 +34,15 @@ public class Product {
         this.specs = specs;
     }
 
+    public Product(String name, int price, String img, String type, String color, Specs specs) {
+        this.name = name;
+        this.price = price;
+        this.img = img;
+        this.type = type;
+        this.color = color;
+        this.specs = specs;
+    }
+
     public String getId() {
         return id;
     }
@@ -88,9 +97,12 @@ public class Product {
         this.specs = specs;
         return this;
     }
+    public String getInternalMemory() {return specs.internalMemory;}
     public String getRam() {
-        return specs.getRam();
+        return specs.ram;
     }
+    public String getChargePort() {return specs.chargePort;}
+    public String getSpecial() {return specs.special;}
     public Bson getUpdateBson() {
         return Updates.combine(
                 Updates.set("name", name),
@@ -98,18 +110,25 @@ public class Product {
                 Updates.set("img", img),
                 Updates.set("type", type),
                 Updates.set("color", color),
+                Updates.set("specs.internalMemory", specs.internalMemory),
                 Updates.set("specs.ram", specs.ram),
-                Updates.set("specs.chargePort", specs.chargePort)
+                Updates.set("specs.chargePort", specs.chargePort),
+                Updates.set("specs.special", specs.special)
             );
     }
     public Document getMongoDocument() {
         return new Document()
-                .append("_id", new ObjectId())
-                .append("name", name)
-                .append("price", price)
-                .append("img", img)
-                .append("type", type)
-                .append("color", color);
+            .append("name", name)
+            .append("price", price)
+            .append("img", img)
+            .append("type", type)
+            .append("color", color)
+            .append("specs", new Document()
+                .append("internalMemory", specs.internalMemory)
+                .append("ram", specs.ram)
+                .append("chargePort", specs.chargePort)
+                .append("special", specs.special)
+            );
     }
     public static class Specs {
         private String internalMemory;
