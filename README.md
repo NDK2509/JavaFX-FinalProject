@@ -63,3 +63,26 @@ Here is an example:
         throw new Error("Can't query!!!" + e);
     }
 ```
+
+# My Project - Manage A Phone Store
+- Login screen
+![Login screen](src/main/resources/project.images/login.screen.PNG)
+- Product management screen
+![Product management screen](src/main/resources/project.images/product_management.screen.PNG)
+### Project structure
+![Project structure](src/main/resources/project.images/packages_and_classes_structure.PNG)
+- My project has 4 main packages: connectDB, controllers, models and screens
+### Database
+- My project uses MongoDB to store the data
+  - Admins Collection <br/>
+![Admins Collection](src/main/resources/project.images/admins.collection.mongoDB.PNG)
+  - Products Collection <br/>
+![Products Collection](src/main/resources/project.images/products.collection.mongoDB.PNG)
+### Done features
+- Login, logout
+- Manage products (Create, Update, Delete, Show)
+### Doing features
+- Manage orders (Create, Delete, Show)
+### Will do-features
+- Export data to excel file
+
