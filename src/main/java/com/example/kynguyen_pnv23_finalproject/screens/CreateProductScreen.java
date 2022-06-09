@@ -36,6 +36,8 @@ public class CreateProductScreen implements Screen {
         return this;
     }
     private CreateProductScreen drawForm(GridPane root) {
+        var btnBack = new Button("Back");
+        btnBack.setOnAction(e -> ((ProductController)MainController.getController()).switchToHome());
         var lbName = new Label("Name");
         var lbPrice = new Label("Price");
         var lbImg = new Label("Image");
@@ -76,9 +78,9 @@ public class CreateProductScreen implements Screen {
                 );
             ((ProductController) MainController.getController()).switchToHome();
         });
-        var hbBtnSave = new HBox();
-        hbBtnSave.getChildren().add(btnSave);
-        hbBtnSave.setAlignment(Pos.CENTER);
+        var hbBtn = new HBox();
+        hbBtn.getChildren().addAll(btnBack, btnSave);
+        hbBtn.setAlignment(Pos.CENTER);
 
         root.add(lbName, 0 ,0);
         root.add(txtName, 1, 0);
@@ -98,7 +100,7 @@ public class CreateProductScreen implements Screen {
         root.add(txtChargePort, 1, 7);
         root.add(lbSpecial, 0 ,8);
         root.add(txtSpecial, 1, 8);
-        root.add(hbBtnSave, 0 ,9, 2, 1);
+        root.add(hbBtn, 0 ,9, 2, 1);
 
 
         return this;
