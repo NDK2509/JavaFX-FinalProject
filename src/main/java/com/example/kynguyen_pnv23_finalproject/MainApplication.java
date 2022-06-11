@@ -6,7 +6,7 @@ import com.example.kynguyen_pnv23_finalproject.controllers.LoginController;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-public class MainController extends Application {
+public class MainApplication extends Application {
     private static Controller controller;
     public static Controller getController() {return controller;}
     public static void setController(Controller newController) {controller = newController;}

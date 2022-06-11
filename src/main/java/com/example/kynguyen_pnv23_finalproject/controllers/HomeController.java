@@ -1,6 +1,6 @@
 package com.example.kynguyen_pnv23_finalproject.controllers;
 
-import com.example.kynguyen_pnv23_finalproject.MainController;
+import com.example.kynguyen_pnv23_finalproject.MainApplication;
 import com.example.kynguyen_pnv23_finalproject.models.Product;
 import com.example.kynguyen_pnv23_finalproject.screens.HomeScreen;
 import javafx.stage.Stage;
@@ -22,10 +22,10 @@ public class HomeController extends Controller{
         this.mg.deleteProduct(id);
     }
     public void switchToCreateProduct() {
-        MainController.setController(new ProductController(this.baseStage));
+        MainApplication.setController(new ProductController(this.baseStage));
     }
     public void logOut() {
-        MainController.setController(new LoginController(this.baseStage));
+        MainApplication.setController(new LoginController(this.baseStage));
     }
 
 }

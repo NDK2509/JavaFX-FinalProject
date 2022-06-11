@@ -1,7 +1,6 @@
 package com.example.kynguyen_pnv23_finalproject.screens;
 
-import com.example.kynguyen_pnv23_finalproject.MainController;
-import com.example.kynguyen_pnv23_finalproject.controllers.HomeController;
+import com.example.kynguyen_pnv23_finalproject.MainApplication;
 import com.example.kynguyen_pnv23_finalproject.controllers.ProductController;
 import com.example.kynguyen_pnv23_finalproject.models.Product;
 import javafx.geometry.Insets;
@@ -37,7 +36,7 @@ public class CreateProductScreen implements Screen {
     }
     private CreateProductScreen drawForm(GridPane root) {
         var btnBack = new Button("Back");
-        btnBack.setOnAction(e -> ((ProductController)MainController.getController()).switchToHome());
+        btnBack.setOnAction(e -> ((ProductController) MainApplication.getController()).switchToHome());
         var lbName = new Label("Name");
         var lbPrice = new Label("Price");
         var lbImg = new Label("Image");
@@ -60,7 +59,7 @@ public class CreateProductScreen implements Screen {
 
         var btnSave = new Button("Save");
         btnSave.setOnAction(e -> {
-            ((ProductController) MainController.getController())
+            ((ProductController) MainApplication.getController())
                 .create(
                     new Product(
                         txtName.getText(),
@@ -76,7 +75,7 @@ public class CreateProductScreen implements Screen {
                         )
                     )
                 );
-            ((ProductController) MainController.getController()).switchToHome();
+            ((ProductController) MainApplication.getController()).switchToHome();
         });
         var hbBtn = new HBox();
         hbBtn.getChildren().addAll(btnBack, btnSave);

@@ -1,7 +1,6 @@
 package com.example.kynguyen_pnv23_finalproject.controllers;
 
-import com.example.kynguyen_pnv23_finalproject.MainController;
-import com.example.kynguyen_pnv23_finalproject.screens.HomeScreen;
+import com.example.kynguyen_pnv23_finalproject.MainApplication;
 import com.example.kynguyen_pnv23_finalproject.screens.LoginScreen;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
@@ -16,7 +15,7 @@ public class LoginController extends Controller{
     }
     public void login(String userName, String password) {
         if (isValidLogin(userName, password)) {
-            MainController.setController(new HomeController(this.baseStage));
+            MainApplication.setController(new HomeController(this.baseStage));
             return;
         }
         loginFailNotify();
