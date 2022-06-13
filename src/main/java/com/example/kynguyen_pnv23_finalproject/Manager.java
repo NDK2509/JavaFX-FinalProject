@@ -5,6 +5,7 @@ import com.example.kynguyen_pnv23_finalproject.models.Admin;
 import com.example.kynguyen_pnv23_finalproject.models.Product;
 import com.mongodb.MongoClientException;
 import com.mongodb.client.MongoDatabase;
+import javafx.scene.control.Alert;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
@@ -66,6 +67,10 @@ public class Manager {
                 );
         } catch (MongoClientException e) {
             System.out.println(e.getMessage());
+            var alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle(null);
+            alert.setContentText("Can't update!!!");
+            alert.showAndWait();
         }
     }
     public void createProduct(Product product) {

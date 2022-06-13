@@ -1,8 +1,7 @@
 package com.example.kynguyen_pnv23_finalproject.screens;
 
-import com.example.kynguyen_pnv23_finalproject.MainController;
+import com.example.kynguyen_pnv23_finalproject.MainApplication;
 import com.example.kynguyen_pnv23_finalproject.controllers.HomeController;
-import com.example.kynguyen_pnv23_finalproject.controllers.ProductController;
 import com.example.kynguyen_pnv23_finalproject.models.*;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
@@ -42,8 +41,8 @@ public class HomeScreen implements Screen{
         var btnLogout = new Button("Log Out");
         var btnCreateProduct = new Button("Create Product");
 
-        btnLogout.setOnAction(e -> ((HomeController)MainController.getController()).logOut());
-        btnCreateProduct.setOnAction(e -> ((HomeController)MainController.getController()).switchToCreateProduct());
+        btnLogout.setOnAction(e -> ((HomeController) MainApplication.getController()).logOut());
+        btnCreateProduct.setOnAction(e -> ((HomeController) MainApplication.getController()).switchToCreateProduct());
         root.add(btnLogout, 0, 0);
         root.add(btnCreateProduct, 1, 0);
         return this;
@@ -52,7 +51,7 @@ public class HomeScreen implements Screen{
 
         var btnProduct = new Button("Manage Product");
         btnProduct.setOnAction(e -> {
-            MainController.getController().onCreate();
+            MainApplication.getController().onCreate();
         });
         btnProduct.setMinWidth(BUTTON_WIDTH);
         btnProduct.setMaxWidth(BUTTON_WIDTH);
@@ -79,7 +78,7 @@ public class HomeScreen implements Screen{
             var newName = e.getNewValue();
             var product = e.getTableView().getItems().get(e.getTablePosition().getRow());
             product.setName(newName);
-            ((HomeController)MainController.getController()).updateProduct(product);
+            ((HomeController) MainApplication.getController()).updateProduct(product);
         } );
         var typeCol = new TableColumn<Product, String>("Type");
         typeCol.setCellFactory(forTableColumn());
@@ -87,6 +86,7 @@ public class HomeScreen implements Screen{
             var newType = e.getNewValue();
             var product = e.getTableView().getItems().get(e.getTablePosition().getRow());
             product.setType(newType);
+            ((HomeController) MainApplication.getController()).updateProduct(product);
         } );
         var priceCol = new TableColumn<Product, Integer>("Price");
         priceCol.setCellFactory(forTableColumn(new IntegerStringConverter()));
@@ -94,6 +94,7 @@ public class HomeScreen implements Screen{
             var newPrice = e.getNewValue();
             var product = e.getTableView().getItems().get(e.getTablePosition().getRow());
             product.setPrice(newPrice);
+            ((HomeController) MainApplication.getController()).updateProduct(product);
         } );
         var imgCol = new TableColumn<Product, String>("Img");
         imgCol.setMaxWidth(300);
@@ -101,14 +102,16 @@ public class HomeScreen implements Screen{
         imgCol.setOnEditCommit(e -> {
             var newImg = e.getNewValue();
             var product = e.getTableView().getItems().get(e.getTablePosition().getRow());
-            product.setType(newImg);
+            product.setImg(newImg);
+            ((HomeController) MainApplication.getController()).updateProduct(product);
         } );
         var colorCol = new TableColumn<Product, String>("Color");
         colorCol.setCellFactory(forTableColumn());
         colorCol.setOnEditCommit(e -> {
             var newColor = e.getNewValue();
             var product = e.getTableView().getItems().get(e.getTablePosition().getRow());
-            product.setType(newColor);
+            product.setColor(newColor);
+            ((HomeController) MainApplication.getController()).updateProduct(product);
         } );
         var specsCol = new TableColumn<Product, String>("Specifications");
         var internalMemoryCol = new TableColumn<Product, String>("Internal Memory");
@@ -117,7 +120,7 @@ public class HomeScreen implements Screen{
             var memo = e.getNewValue();
             var product = e.getTableView().getItems().get(e.getTablePosition().getRow());
             product.getSpecs().setInternalMemory(memo);
-            ((HomeController)MainController.getController()).updateProduct(product);
+            ((HomeController) MainApplication.getController()).updateProduct(product);
         } );
         var ramCol = new TableColumn<Product, String>("RAM");
         ramCol.setCellFactory(forTableColumn());
@@ -125,7 +128,7 @@ public class HomeScreen implements Screen{
             var ram = e.getNewValue();
             var product = e.getTableView().getItems().get(e.getTablePosition().getRow());
             product.getSpecs().setRam(ram);
-            ((HomeController)MainController.getController()).updateProduct(product);
+            ((HomeController) MainApplication.getController()).updateProduct(product);
         } );
         var chargePortCol = new TableColumn<Product, String>("Charge Port");
         chargePortCol.setCellFactory(forTableColumn());
@@ -133,7 +136,7 @@ public class HomeScreen implements Screen{
             var chargePort = e.getNewValue();
             var product = e.getTableView().getItems().get(e.getTablePosition().getRow());
             product.getSpecs().setChargePort(chargePort);
-            ((HomeController)MainController.getController()).updateProduct(product);
+            ((HomeController) MainApplication.getController()).updateProduct(product);
         } );
         var specialCol = new TableColumn<Product, String>("Special");
         specialCol.setCellFactory(forTableColumn());
@@ -141,7 +144,7 @@ public class HomeScreen implements Screen{
             var special = e.getNewValue();
             var product = e.getTableView().getItems().get(e.getTablePosition().getRow());
             product.getSpecs().setSpecial(special);
-            ((HomeController)MainController.getController()).updateProduct(product);
+            ((HomeController) MainApplication.getController()).updateProduct(product);
         } );
         specsCol.getColumns().addAll(internalMemoryCol,ramCol, chargePortCol, specialCol);
         var deleteCol = new TableColumn<Product, Void>("Action");
@@ -150,7 +153,7 @@ public class HomeScreen implements Screen{
             {
                 btn.setOnAction((e) -> {
                     var product = getTableView().getItems().get(getIndex());
-                    var controller =  (HomeController)MainController.getController();
+                    var controller =  (HomeController) MainApplication.getController();
                     controller.deleteProduct(product.getId());
                     controller.onCreate();
                 });

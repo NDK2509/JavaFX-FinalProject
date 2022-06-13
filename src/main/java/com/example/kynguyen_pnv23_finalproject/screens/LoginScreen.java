@@ -1,6 +1,6 @@
 package com.example.kynguyen_pnv23_finalproject.screens;
 
-import com.example.kynguyen_pnv23_finalproject.MainController;
+import com.example.kynguyen_pnv23_finalproject.MainApplication;
 import com.example.kynguyen_pnv23_finalproject.controllers.LoginController;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -33,7 +33,7 @@ public class LoginScreen implements Screen{
         var btnLogin = new Button("Login");
         btnLogin.setMaxWidth(Double.MAX_VALUE);
         btnLogin.setOnAction((e) -> {
-            ((LoginController)MainController.getController()).login(txtUsername.getText(), txtPassword.getText());
+            ((LoginController) MainApplication.getController()).login(txtUsername.getText(), txtPassword.getText());
         });
         ROOT.add(lbLogin, 0, 0, 2, 1);
         ROOT.add(new Label("Username: "), 0, 1);
